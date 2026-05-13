@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elo Representações — Sistema de Romaneios</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="elo-representacoes.css">
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <div class="logo-text">
+        <strong>Romaneio</strong>
+        <span>Gestão de Pedidos</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-label">Principal</div>
+        <div class="nav-item active" onclick="showPage('dashboard', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </div>
+        <div class="nav-item" onclick="showPage('pedidos', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Pedidos
+        </div>
+        <div class="nav-item" onclick="showPage('clientes', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
+          Clientes
+        </div>
+        <div class="nav-item" onclick="showPage('importadoras', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Importadoras
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-label">Ações rápidas</div>
+        <div class="nav-item" onclick="showPage('novo-pedido', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo Pedido
+        </div>
+        <div class="nav-item" onclick="openModal('modal-cliente')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo Cliente
+        </div>
+        <div class="nav-item" onclick="openModal('modal-importadora')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nova Importadora
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sf-name">Elo Representação</div>
+      <div class="sf-phone">(11) 91281-7885</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <span class="topbar-title" id="page-title">Dashboard</span>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="showPage('novo-pedido', null)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Novo Romaneio
+        </button>
+      </div>
+    </div>
+
+    <!-- ───── DASHBOARD ───── -->
+    <section class="page active" id="page-dashboard">
+      <div class="dash-grid">
+        <div class="stat-card c1">
+          <div class="stat-label">Romaneios Emitidos</div>
+          <div class="stat-value" id="stat-pedidos">0</div>
+          <div class="stat-sub">Total cadastrado</div>
+        </div>
+        <div class="stat-card c2">
+          <div class="stat-label">Clientes</div>
+          <div class="stat-value" id="stat-clientes">0</div>
+          <div class="stat-sub">Cadastrados</div>
+        </div>
+        <div class="stat-card c3">
+          <div class="stat-label">Importadoras</div>
+          <div class="stat-value" id="stat-importadoras">0</div>
+          <div class="stat-sub">Fornecedores</div>
+        </div>
+        <div class="stat-card c4">
+          <div class="stat-label">Último Nº</div>
+          <div class="stat-value" id="stat-ultimo">—</div>
+          <div class="stat-sub">Romaneio</div>
+        </div>
+      </div>
+      <div class="recent-card">
+        <div class="card-header">
+          <span class="card-title">Últimos Romaneios</span>
+          <button class="btn btn-secondary btn-sm" onclick="showPage('pedidos', null)">Ver todos</button>
+        </div>
+        <div class="table-wrap" id="dash-recent">
+          <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <h3>Nenhum romaneio emitido</h3>
+            <p>Crie o primeiro romaneio para começar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── CLIENTES ───── -->
+    <section class="page" id="page-clientes">
+      <div class="recent-card">
+        <div class="search-row">
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Buscar clientes..." id="search-clientes" oninput="filterTable('clientes')">
+          </div>
+          <button class="btn btn-primary" onclick="openModal('modal-cliente')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Novo Cliente
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table id="table-clientes">
+            <thead>
+              <tr>
+                <th>Nome / Razão Social</th>
+                <th>Apelido</th>
+                <th>Tipo</th>
+                <th>CPF / CNPJ</th>
+                <th>Cidade</th>
+                <th>Telefone</th>
+                <th>Situação</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbody-clientes">
+              <tr><td colspan="8" style="padding:0"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg><h3>Nenhum cliente cadastrado</h3><p>Clique em "Novo Cliente" para adicionar.</p></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── IMPORTADORAS ───── -->
+    <section class="page" id="page-importadoras">
+      <div class="recent-card">
+        <div class="search-row">
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Buscar importadoras..." id="search-importadoras" oninput="filterTable('importadoras')">
+          </div>
+          <button class="btn btn-primary" onclick="openModal('modal-importadora')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nova Importadora
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table id="table-importadoras">
+            <thead>
+              <tr>
+                <th>Apelido</th>
+                <th>Nome Fantasia</th>
+                <th>CNPJ</th>
+                <th>Banco</th>
+                <th>PIX</th>
+                <th>Comissão</th>
+                <th>Fator X</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbody-importadoras">
+              <tr><td colspan="8" style="padding:0"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><h3>Nenhuma importadora cadastrada</h3><p>Clique em "Nova Importadora" para adicionar.</p></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── PEDIDOS ───── -->
+    <section class="page" id="page-pedidos">
+      <div class="recent-card">
+        <div class="search-row">
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Buscar romaneios..." id="search-pedidos" oninput="filterTable('pedidos')">
+          </div>
+          <button class="btn btn-primary" onclick="showPage('novo-pedido', null)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Novo Romaneio
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table id="table-pedidos">
+            <thead>
+              <tr>
+                <th>Nº Romaneio</th>
+                <th>Data</th>
+                <th>Cliente</th>
+                <th>Fornecedor</th>
+                <th>NF</th>
+                <th>Valor Total</th>
+                <th>Transporte</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbody-pedidos">
+              <tr><td colspan="8" style="padding:0"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg><h3>Nenhum romaneio emitido</h3><p>Clique em "Novo Romaneio" para criar.</p></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───── NOVO PEDIDO ───── -->
+    <section class="page" id="page-novo-pedido">
+
+      <div class="form-card">
+        <div class="form-section">
+          <div class="section-title">Identificação do Romaneio</div>
+          <div class="form-grid col-4">
+            <div class="field">
+              <label>Nº Romaneio</label>
+              <input type="text" id="ped-numero" placeholder="00001">
+            </div>
+            <div class="field">
+              <label>Data</label>
+              <input type="date" id="ped-data">
+            </div>
+            <div class="field">
+              <label>Nota Fiscal</label>
+              <input type="text" id="ped-nf" placeholder="Ex: 9695">
+            </div>
+            <div class="field">
+              <label>Coleta</label>
+              <input type="text" id="ped-coleta" placeholder="Ex: 001">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">Partes Envolvidas</div>
+          <div class="form-grid col-3">
+            <div class="field">
+              <label>Cliente</label>
+              <select id="ped-cliente">
+                <option value="">— Selecione o cliente —</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Fornecedor / Importadora</label>
+              <select id="ped-fornecedor">
+                <option value="">— Selecione a importadora —</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Vendedor(a)</label>
+              <input type="text" id="ped-vendedor" placeholder="Nome do vendedor">
+            </div>
+          </div>
+          <div class="form-grid col-2" style="margin-top:16px">
+            <div class="field">
+              <label>Nº Pedido Importadora</label>
+              <input type="text" id="ped-num-imp" placeholder="Número do pedido na importadora">
+            </div>
+            <div class="field">
+              <label>Transporte</label>
+              <select id="ped-transporte">
+                <option>ENTREGA</option>
+                <option>COLETA</option>
+                <option>SEDEX</option>
+                <option>PAC</option>
+                <option>TRANSPORTADORA</option>
+                <option>RETIRADA</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">Itens do Pedido</div>
+          <div class="table-wrap">
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th style="width:70px">Quant</th>
+                  <th style="width:80px">Unid</th>
+                  <th style="width:110px">Referência</th>
+                  <th>Produto</th>
+                  <th style="width:80px">Desc %</th>
+                  <th style="width:110px">Preço (R$)</th>
+                  <th style="width:110px">Total (R$)</th>
+                  <th style="width:40px"></th>
+                </tr>
+              </thead>
+              <tbody id="items-tbody"></tbody>
+            </table>
+          </div>
+          <div class="items-footer">
+            <button class="btn btn-secondary" onclick="addItem()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Adicionar Item
+            </button>
+            <div class="totals-box">
+              <div class="totals-row">
+                <span class="totals-label">Subtotal:</span>
+                <span class="totals-value" id="tot-subtotal">R$ 0,00</span>
+              </div>
+              <div class="totals-row">
+                <span class="totals-label">Desconto:</span>
+                <span class="totals-value" id="tot-desconto">R$ 0,00</span>
+              </div>
+              <div class="totals-row">
+                <span class="totals-label">Imposto:</span>
+                <span class="totals-value" id="tot-imposto">R$ 0,00</span>
+              </div>
+              <div class="totals-row">
+                <span class="totals-label">VALOR TOTAL:</span>
+                <span class="totals-value" id="tot-total">R$ 0,00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">Vencimentos</div>
+          <div id="vencimentos-list"></div>
+          <div style="margin-top:12px; display:flex; gap:10px">
+            <button class="btn btn-secondary btn-sm" onclick="addVencimento()">+ Adicionar Vencimento</button>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="section-title">Observações</div>
+          <div class="field">
+            <textarea id="ped-obs" placeholder="Observações adicionais, dados bancários para pagamento, etc..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-section" style="display:flex; justify-content:flex-end; gap:12px; padding-top:20px">
+          <button class="btn btn-secondary" onclick="showPage('pedidos', null)">Cancelar</button>
+          <button class="btn btn-secondary" onclick="previewRomaneio()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Pré-visualizar
+          </button>
+          <button class="btn btn-gold" onclick="savePedido()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            Salvar Romaneio
+          </button>
+          <button class="btn btn-primary" onclick="gerarPDF()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Gerar PDF
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ───── MODAL CLIENTE ───── -->
+<div class="modal-overlay" id="modal-cliente">
+  <div class="modal" style="max-width:700px; max-height:90vh; overflow-y:auto">
+    <div class="modal-title">Cadastro de Cliente</div>
+    <div class="modal-sub">Preencha os dados do cliente.</div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="form-grid col-2">
+        <div class="field">
+          <label>Nome / Razão Social</label>
+          <input type="text" id="cli-nome" placeholder="Nome completo ou razão social">
+        </div>
+        <div class="field">
+          <label>Apelido</label>
+          <input type="text" id="cli-apelido" placeholder="Como é chamado">
+        </div>
+      </div>
+      <div class="form-grid col-2">
+        <div class="field">
+          <label>Nome Fantasia</label>
+          <input type="text" id="cli-fantasia" placeholder="Nome fantasia">
+        </div>
+        <div class="field">
+          <label>Tipo de Pessoa</label>
+          <div class="radio-group">
+            <label class="radio-pill">
+              <input type="radio" name="cli-tipo" value="PF" checked>
+              <span class="radio-dot"></span> Física (PF)
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="cli-tipo" value="PJ">
+              <span class="radio-dot"></span> Jurídica (PJ)
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-grid col-3">
+        <div class="field">
+          <label>CPF / CNPJ</label>
+          <input type="text" id="cli-doc" placeholder="000.000.000-00">
+        </div>
+        <div class="field">
+          <label>Inscrição Estadual (IE)</label>
+          <input type="text" id="cli-ie" placeholder="IE">
+        </div>
+        <div class="field">
+          <label>Situação</label>
+          <select id="cli-situacao">
+            <option value="Ativo">Ativo</option>
+            <option value="Inativo">Inativo</option>
+            <option value="Inadimplente">Inadimplente</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-grid col-1">
+        <div class="field">
+          <label>Endereço</label>
+          <input type="text" id="cli-endereco" placeholder="Rua, número, complemento">
+        </div>
+      </div>
+      <div class="form-grid col-3">
+        <div class="field">
+          <label>Cidade</label>
+          <input type="text" id="cli-cidade">
+        </div>
+        <div class="field">
+          <label>Estado</label>
+          <select id="cli-estado">
+            <option>SP</option><option>RJ</option><option>MG</option><option>RS</option><option>PR</option><option>SC</option><option>BA</option><option>GO</option><option>DF</option><option>AM</option><option>PA</option><option>CE</option><option>PE</option><option>ES</option><option>MS</option><option>MT</option><option>RO</option><option>AC</option><option>AP</option><option>RR</option><option>TO</option><option>MA</option><option>PI</option><option>RN</option><option>PB</option><option>AL</option><option>SE</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>CEP</label>
+          <input type="text" id="cli-cep" placeholder="00000-000">
+        </div>
+      </div>
+      <div class="form-grid col-3">
+        <div class="field">
+          <label>Telefone</label>
+          <input type="text" id="cli-tel" placeholder="(11) 0000-0000">
+        </div>
+        <div class="field">
+          <label>Celular</label>
+          <input type="text" id="cli-cel" placeholder="(11) 90000-0000">
+        </div>
+        <div class="field">
+          <label>Transportadora</label>
+          <input type="text" id="cli-transp" placeholder="Nome da transportadora">
+        </div>
+      </div>
+      <div>
+        <div class="section-title" style="margin-bottom:12px">E-mails (até 5)</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="field"><input type="email" class="cli-email" placeholder="E-mail 1"></div>
+          <div class="field"><input type="email" class="cli-email" placeholder="E-mail 2 (opcional)"></div>
+          <div class="field"><input type="email" class="cli-email" placeholder="E-mail 3 (opcional)"></div>
+          <div class="field"><input type="email" class="cli-email" placeholder="E-mail 4 (opcional)"></div>
+          <div class="field"><input type="email" class="cli-email" placeholder="E-mail 5 (opcional)"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-cliente')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveCliente()">Salvar Cliente</button>
+    </div>
+  </div>
+</div>
+
+<!-- ───── MODAL IMPORTADORA ───── -->
+<div class="modal-overlay" id="modal-importadora">
+  <div class="modal" style="max-width:680px; max-height:90vh; overflow-y:auto">
+    <div class="modal-title">Cadastro de Importadora</div>
+    <div class="modal-sub">Dados do fornecedor / importadora.</div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="form-grid col-2">
+        <div class="field">
+          <label>Apelido</label>
+          <input type="text" id="imp-apelido" placeholder="Apelido interno">
+        </div>
+        <div class="field">
+          <label>Nome da Importadora</label>
+          <input type="text" id="imp-nome" placeholder="Razão social">
+        </div>
+      </div>
+      <div class="form-grid col-2">
+        <div class="field">
+          <label>Nome Fantasia</label>
+          <input type="text" id="imp-fantasia" placeholder="Nome fantasia">
+        </div>
+        <div class="field">
+          <label>CNPJ</label>
+          <input type="text" id="imp-cnpj" placeholder="00.000.000/0001-00">
+        </div>
+      </div>
+      <div class="form-grid col-2">
+        <div class="field">
+          <label>CPF</label>
+          <input type="text" id="imp-cpf" placeholder="000.000.000-00">
+        </div>
+        <div class="field">
+          <label>PIX</label>
+          <input type="text" id="imp-pix" placeholder="Chave PIX">
+        </div>
+      </div>
+      <div style="margin-top:4px">
+        <div class="section-title" style="margin-bottom:12px">Dados Bancários</div>
+      </div>
+      <div class="form-grid col-2">
+        <div class="field">
+          <label>Banco</label>
+          <input type="text" id="imp-banco" placeholder="Ex: Bradesco, Itaú, Caixa">
+        </div>
+        <div class="field">
+          <label>Agência</label>
+          <input type="text" id="imp-agencia" placeholder="Ex: 0125">
+        </div>
+      </div>
+      <div class="form-grid col-2">
+        <div class="field">
+          <label>Tipo de Conta</label>
+          <select id="imp-tipo-conta">
+            <option>Conta Corrente</option>
+            <option>Conta Poupança</option>
+            <option>Conta Salário</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Número da Conta</label>
+          <input type="text" id="imp-conta" placeholder="Ex: 3027-9">
+        </div>
+      </div>
+      <div style="margin-top:4px">
+        <div class="section-title" style="margin-bottom:12px">Parâmetros Comerciais</div>
+      </div>
+      <div class="form-grid col-2">
+        <div class="field">
+          <label>Comissão (%)</label>
+          <input type="number" id="imp-comissao" placeholder="Ex: 5" min="0" max="100" step="0.1">
+        </div>
+        <div class="field">
+          <label>Fator X</label>
+          <input type="number" id="imp-fatorx" placeholder="Ex: 1.5" min="0" step="0.01">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('modal-importadora')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveImportadora()">Salvar Importadora</button>
+    </div>
+  </div>
+</div>
+
+<!-- ───── MODAL PREVIEW ───── -->
+<div class="modal-overlay" id="modal-preview">
+  <div class="modal" style="max-width:860px; max-height:92vh; overflow-y:auto; padding:0">
+    <div style="padding:20px 28px; border-bottom:1px solid var(--border); display:flex;align-items:center;justify-content:space-between">
+      <span style="font-family:'Poppins',sans-serif;font-weight:700;font-size:18px">Pré-visualização do Romaneio</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost btn-sm" onclick="closeModal('modal-preview')">Fechar</button>
+        <button class="btn btn-primary btn-sm" onclick="gerarPDF()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Gerar PDF
+        </button>
+      </div>
+    </div>
+    <div style="padding:28px" id="preview-content"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg">Salvo com sucesso!</span>
+</div>
+
+<script src="elo-representacoes.js"></script>
+</body>
+</html>
